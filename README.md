@@ -17,5 +17,12 @@ ssh tunnel@sjmf.in
 echo "/opt/tunnel/tunnel.sh 22 20033 >/var/log/user_tunnel.log 2>&1 &" >> /etc/rc.local
 # (then vi it to check there's no exit 0 on the end)
 
+# Create wifi.sh cronjob
+MYCRON=$(mktemp)
+crontab -l > $MYCRON &&\
+    echo "* * * * * bash /opt/tunnel/wifi.sh > /var/log/wifi.log 2>&1" >> $MYCRON &&\
+    crontab $MYCRON 
+rm $MYCRON
+
 ```
 

@@ -19,7 +19,8 @@ if [ "$#" -lt 2 ]; then
 fi
 
 # check running status
-if [ $(ps -ef | grep autossh | grep -v "grep" | wc -l) -gt 0 ]; then
+RUNNING=$(ps -ef | grep autossh | grep -v "grep" | grep "$SSH_REMOTE_PORT:localhost:$SSH_SOURCE_PORT" | wc -l)
+if [ $RUNNING -gt 0 ]; then
 	echo "Autossh already running!"
 	exit 1
 fi
